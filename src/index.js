@@ -1,6 +1,8 @@
 const express = require('express');
 const path = require('path');
 const { read } = require('./utils/functionsFS');
+const createToken = require('./utils/createToken');
+const validateLoginMiddlewares = require('./middleswares/validateLogin');
 
 const filePath = path.resolve('src', 'talker.json');
 
@@ -18,11 +20,14 @@ app.get('/talker/:id', async (req, res) => {
   const data = await read(filePath);
   if (!data) return res.status(500).send('Erro na leitura do banco de dados');
 
-  console.log(typeof data);
-
   const person = data.find((p) => p.id === Number(id));
   if (!person) return res.status(404).json({ message: 'Pessoa palestrante não encontrada' });
   return res.status(200).json(person);
+});
+
+app.post('/login', validateLoginMiddlewares, (req, res) => {
+  const token = createToken();
+  return res.status(200).json({ token });
 });
 
 /* ============================= */
