@@ -13,6 +13,18 @@ app.get('/talker', async (req, res) => {
   return res.status(200).json(data);
 });
 
+app.get('/talker/:id', async (req, res) => {
+  const { id } = req.params;
+  const data = await read(filePath);
+  if (!data) return res.status(500).send('Erro na leitura do banco de dados');
+
+  console.log(typeof data);
+
+  const person = data.find((p) => p.id === Number(id));
+  if (!person) return res.status(404).json({ message: 'Pessoa palestrante não encontrada' });
+  return res.status(200).json(person);
+});
+
 /* ============================= */
 
 const HTTP_OK_STATUS = 200;
