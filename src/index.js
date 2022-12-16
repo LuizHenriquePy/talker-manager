@@ -2,7 +2,7 @@ const express = require('express');
 const path = require('path');
 const { read } = require('./utils/functionsFS');
 const createToken = require('./utils/createToken');
-const validateLoginMiddlewares = require('./middleswares/validateLogin');
+const validateLoginMiddlewares = require('./middlewares/validateLogin');
 
 const filePath = path.resolve('src', 'talker.json');
 
