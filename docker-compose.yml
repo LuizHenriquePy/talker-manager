@@ -13,8 +13,6 @@ services:
     stdin_open: true
     # Substitui o comando padrão da imagem do node
     command: bash
-    # Restarta a imagem caso algo a faça parar
-    restart: always
     # Diretório padrão de execução
     working_dir: /app
     # Lista de volumes (diretórios) mapeados de fora para dentro do container
