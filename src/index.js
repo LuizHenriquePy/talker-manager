@@ -1,8 +1,10 @@
 const express = require('express');
 const path = require('path');
-const { read } = require('./utils/functionsFS');
+const { read, write } = require('./utils/functionsFS');
 const createToken = require('./utils/createToken');
-const validateLoginMiddlewares = require('./middlewares/validateLogin');
+const validateLogin = require('./middlewares/validateLogin');
+const validateTalkerRegistration = require('./middlewares/validateTalkerRegistration');
+const idGenerator = require('./utils/idGenerator');
 
 const filePath = path.resolve('src', 'talker.json');
 
@@ -25,7 +27,16 @@ app.get('/talker/:id', async (req, res) => {
   return res.status(200).json(person);
 });
 
-app.post('/login', validateLoginMiddlewares, (req, res) => {
+app.post('/talker', validateTalkerRegistration, async (req, res) => {
+  const newTalker = { ...req.body };
+  const talkers = await read(filePath);
+  newTalker.id = await idGenerator();
+  talkers.push(newTalker);
+  await write(talkers, filePath);
+  return res.status(201).json(newTalker);
+});
+
+app.post('/login', validateLogin, (req, res) => {
   const token = createToken();
   return res.status(200).json({ token });
 });
