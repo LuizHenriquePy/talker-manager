@@ -65,7 +65,7 @@ app.put('/talker/:id', validateToken, validateTalkerRegistration, async (req, re
 app.delete('/talker/:id', validateToken, async (req, res) => {
   const { id } = req.params;
   const talkers = await read(filePath);
-  const newTalkers = talkers.map((talker) => talker.id !== Number(id));
+  const newTalkers = talkers.filter((talker) => talker.id !== Number(id));
   await write(newTalkers, filePath);
   return res.status(204).send();
 });
