@@ -44,7 +44,7 @@ const validateWatchedAt = (watchedAt) => {
 };
 
 const validateRate = (rate) => {
-  if (!rate) {
+  if (rate === undefined) {
     return { message: 'O campo "rate" é obrigatório', status: 400 };
   }
   if (!Number.isInteger(rate) || (rate < 1 || rate > 5)) {
