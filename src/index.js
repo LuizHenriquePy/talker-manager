@@ -18,6 +18,16 @@ app.get('/talker', async (req, res) => {
   return res.status(200).json(data);
 });
 
+app.get('/talker/search', validateToken, async (req, res) => {
+  const { q } = req.query;
+  const talkers = await read(filePath);
+  if (q === undefined || q === '') {
+    return res.status(200).json(talkers);
+  }
+  const researchedTalkers = talkers.filter((talker) => talker.name.includes(q));
+  return res.status(200).json(researchedTalkers);
+});
+
 app.get('/talker/:id', async (req, res) => {
   const { id } = req.params;
   const data = await read(filePath);
