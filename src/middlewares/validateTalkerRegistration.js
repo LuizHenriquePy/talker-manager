@@ -1,12 +1,3 @@
-const validateToken = (token) => {
-  if (!token) {
-    return { message: 'Token não encontrado', status: 401 };
-  }
-  if (typeof token !== 'string' || token.length !== 16) {
-    return { message: 'Token inválido', status: 401 };
-  }
-};
-
 const validateName = (name) => {
   if (!name) {
     return { message: 'O campo "name" é obrigatório', status: 400 };
@@ -64,11 +55,9 @@ const validateTalk = (talk) => {
 };
 
 const validateTalkerRegistration = (req, res, next) => {
-  const { authorization } = req.headers;
   const { name, age, talk } = req.body;
 
   const validations = [
-    validateToken(authorization),
     validateName(name),
     validateAge(age),
     validateTalk(talk),

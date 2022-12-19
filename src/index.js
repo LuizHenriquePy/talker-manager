@@ -4,6 +4,7 @@ const { read, write } = require('./utils/functionsFS');
 const createToken = require('./utils/createToken');
 const validateLogin = require('./middlewares/validateLogin');
 const validateTalkerRegistration = require('./middlewares/validateTalkerRegistration');
+const validateToken = require('./middlewares/validateToken');
 const idGenerator = require('./utils/idGenerator');
 
 const filePath = path.resolve('src', 'talker.json');
@@ -27,7 +28,7 @@ app.get('/talker/:id', async (req, res) => {
   return res.status(200).json(person);
 });
 
-app.post('/talker', validateTalkerRegistration, async (req, res) => {
+app.post('/talker', validateToken, validateTalkerRegistration, async (req, res) => {
   const newTalker = { ...req.body };
   const talkers = await read(filePath);
   newTalker.id = await idGenerator();
@@ -36,7 +37,7 @@ app.post('/talker', validateTalkerRegistration, async (req, res) => {
   return res.status(201).json(newTalker);
 });
 
-app.put('/talker/:id', validateTalkerRegistration, async (req, res) => {
+app.put('/talker/:id', validateToken, validateTalkerRegistration, async (req, res) => {
   let { id } = req.params;
   id = Number(id);
   const talkers = await read(filePath);
