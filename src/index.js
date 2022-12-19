@@ -36,6 +36,21 @@ app.post('/talker', validateTalkerRegistration, async (req, res) => {
   return res.status(201).json(newTalker);
 });
 
+app.put('/talker/:id', validateTalkerRegistration, async (req, res) => {
+  let { id } = req.params;
+  id = Number(id);
+  const talkers = await read(filePath);
+  const newTalker = { ...req.body, id };
+  const newTalkers = talkers.map((talker) => {
+    if (talker.id === id) {
+      return newTalker;
+    }
+    return talker;
+  });
+  await write(newTalkers, filePath);
+  return res.status(200).json(newTalker);
+});
+
 app.post('/login', validateLogin, (req, res) => {
   const token = createToken();
   return res.status(200).json({ token });
