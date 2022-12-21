@@ -10,18 +10,8 @@ app.use(express.json());
 app.use('/login', loginRouter);
 app.use('/talker', talkerRouter);
 
-/* ============================= */
-
-const HTTP_OK_STATUS = 200;
-const PORT = '3000';
-
-// não remova esse endpoint, e para o avaliador funcionar
-app.get('/', (_request, response) => {
-  response.status(HTTP_OK_STATUS).send();
-});
-
 app.use(errorHandler);
 
-app.listen(PORT, () => {
+app.listen('3000', () => {
   console.log('Online');
 });
