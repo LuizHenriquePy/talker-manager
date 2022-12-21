@@ -8,3 +8,7 @@ Não deixe de usar nossas dicas de escrita de README de projetos, e deixe sua cr
 - quais arquivos/pastas foram desenvolvidos por outra pessoa estudante;
 - quais arquivos/pastas foram desenvolvidos pela Trybe.
 -->
+Desenvolvidos pela Trybe:
+- docker-compose.yml
+- talker.json
+- seed.json
