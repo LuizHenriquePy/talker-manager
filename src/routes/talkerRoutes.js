@@ -68,7 +68,7 @@ talkerRouter.post('/', validateToken, validateTalkerRegistration, async (req, re
 talkerRouter.put('/:id', validateToken, validateTalkerRegistration, async (req, res, next) => {
   try {
     let { id } = req.params;
-    id = Number(id);  
+    id = Number(id);
     const talkers = await read(filePath);
     if (!talkers) throw new Error(ERROR_MESSAGE_READ);
     const newTalker = { ...req.body, id };
