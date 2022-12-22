@@ -6,7 +6,8 @@
   "scripts": {
     "restore": "cp src/tests/seed.json src/talker.json",
     "start": "node src/index.js",
-    "dev": "nodemon src/index.js --ignore 'src/talker.json'"
+    "dev": "nodemon src/index.js --ignore 'src/talker.json'",
+    "test": "mocha tests/**/*.test.js --exit"
   },
   "keywords": [],
   "author": "",
