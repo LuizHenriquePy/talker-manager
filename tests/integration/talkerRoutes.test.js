@@ -98,9 +98,19 @@ describe('routes talker', function() {
       expect(response.body).to.be.instanceOf(Array);
       expect(response.body).to.have.lengthOf(1);
       expect(response.body).to.deep.equal([mockFile[0]]);
-    })
+    });
     it('return two talker', async function() {
-      const response = await chai.request(app).get('/talker/search');
+      const response = await chai
+        .request(app)
+        .get('/talker/search')
+        .set('Authorization', 'loejdoensotuuedh')
+        .query({q:'He'});
+
+      expect(response.status).to.be.equal(200);
+      expect(response.body).to.be.instanceOf(Array);
+      expect(response.body).to.have.lengthOf(2);
+      expect(response.body).to.deep.equal(mockFile);
     })
   });
 });
+/* returns an empty array */
