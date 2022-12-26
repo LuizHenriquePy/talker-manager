@@ -47,5 +47,13 @@ describe('routes talker', function() {
       expect(response.body).to.deep.equal(mockFile);
     });
   });
-});
+  describe('get /talker/search', function() {
+    it('returns error when not passing the token', async function() {
+      const response = await chai.request(app).get('/talker/search');
 
+      expect(response.status).to.be.equal(401);
+      expect(response.body).to.haveOwnProperty('message');
+      expect(response.body.message).to.be.equal('Token não encontrado');
+    });
+  });
+});
