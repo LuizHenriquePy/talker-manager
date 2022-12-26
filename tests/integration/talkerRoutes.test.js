@@ -125,11 +125,15 @@ describe('routes talker', function() {
     });
   });
   describe('get /talker/:id', function() {
-     it('return person not found', async function() {
+    it('return person not found', async function() {
+      const response = await chai.request(app).get('/talker/34');
 
-     });
-     it('return a person', async function() {
+      expect(response.status).to.be.equal(404);
+      expect(response.body).to.haveOwnProperty('message');
+      expect(response.body.message).to.be.equal('Pessoa palestrante não encontrada');
+    });
+    it('return a person', async function() {
 
-     });
+    });
   });
 });
