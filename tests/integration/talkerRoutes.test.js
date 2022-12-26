@@ -56,4 +56,14 @@ describe('routes talker', function() {
       expect(response.body.message).to.be.equal('Token não encontrado');
     });
   });
+  it('returns error when passing invalid token less than 16 characters', async function() {
+    const response = await chai
+      .request(app)
+      .get('/talker/search')
+      .set('Authorization', 'asdasd');
+    
+    expect(response.status).to.be.equal(401);
+    expect(response.body).to.haveOwnProperty('message');
+    expect(response.body.message).to.be.equal('Token inválido');
+  });
 });
