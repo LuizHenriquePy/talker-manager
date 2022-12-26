@@ -124,4 +124,12 @@ describe('routes talker', function() {
       expect(response.body).to.deep.equal([]);
     });
   });
+  describe('get /talker/:id', function() {
+     it('return person not found', async function() {
+
+     });
+     it('return a person', async function() {
+
+     });
+  });
 });
