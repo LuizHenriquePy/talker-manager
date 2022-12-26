@@ -110,7 +110,18 @@ describe('routes talker', function() {
       expect(response.body).to.be.instanceOf(Array);
       expect(response.body).to.have.lengthOf(2);
       expect(response.body).to.deep.equal(mockFile);
-    })
+    });
+    it('returns an empty array', async function() {
+      const response = await chai
+        .request(app)
+        .get('/talker/search')
+        .set('Authorization', 'loejdoensotuuedh')
+        .query({q:'test'});
+
+      expect(response.status).to.be.equal(200);
+      expect(response.body).to.be.instanceOf(Array);
+      expect(response.body).to.have.lengthOf(0);
+      expect(response.body).to.deep.equal([]);
+    });
   });
 });
-/* returns an empty array */
