@@ -76,8 +76,17 @@ describe('routes talker', function() {
         expect(response.body.message).to.be.equal('Token inválido');
     });
     it('returns all talkers', async function() {
-      const response = await chai.request(app).get('/talker/search');
-    })
+      const response = await chai
+        .request(app)
+        .get('/talker/search')
+        .set('Authorization', 'loejdoensotuuedh')
+        .query({q:''});
+
+      expect(response.status).to.be.equal(200);
+      expect(response.body).to.be.instanceOf(Array);
+      expect(response.body).to.have.lengthOf(2);
+      expect(response.body).to.deep.equal(mockFile);
+    });
     it('return a talker', async function() {
       const response = await chai.request(app).get('/talker/search');
     })
