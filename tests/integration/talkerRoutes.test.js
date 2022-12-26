@@ -75,5 +75,14 @@ describe('routes talker', function() {
         expect(response.body).to.haveOwnProperty('message');
         expect(response.body.message).to.be.equal('Token inválido');
     });
+    it('returns all talkers', async function() {
+      const response = await chai.request(app).get('/talker/search');
+    })
+    it('return a talker', async function() {
+      const response = await chai.request(app).get('/talker/search');
+    })
+    it('return two talker', async function() {
+      const response = await chai.request(app).get('/talker/search');
+    })
   });
 });
