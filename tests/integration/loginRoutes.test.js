@@ -18,7 +18,7 @@ describe('route login', function() {
         });
   
       expect(response.status).to.be.equal(200);
-      expect(response.body).to.be.haveOwnProperty('token');
+      expect(response.body).to.haveOwnProperty('token');
       expect(typeof response.body.token).to.be.equal('string')
       expect(response.body.token).to.have.lengthOf(16);
     });
