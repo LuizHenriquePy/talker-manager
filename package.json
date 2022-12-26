@@ -2,11 +2,11 @@
   "name": "talker-manager",
   "version": "1.0.0",
   "description": "",
-  "main": "src/index.js",
+  "main": "src/server.js",
   "scripts": {
     "restore": "cp src/tests/seed.json src/talker.json",
-    "start": "node src/index.js",
-    "dev": "nodemon src/index.js --ignore 'src/talker.json'",
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js --ignore 'src/talker.json'",
     "test": "mocha tests/**/*.test.js --exit"
   },
   "keywords": [],
@@ -19,6 +19,7 @@
   },
   "devDependencies": {
     "chai": "4.3.4",
+    "chai-http": "4.3.0",
     "eslint": "^8.30.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.26.0",
