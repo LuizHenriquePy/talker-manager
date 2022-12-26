@@ -12,6 +12,4 @@ app.use('/talker', talkerRouter);
 
 app.use(errorHandler);
 
-app.listen('3000', () => {
-  console.log('Online');
-});
+module.exports = app;
