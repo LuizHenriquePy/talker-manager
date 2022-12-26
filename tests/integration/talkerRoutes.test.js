@@ -140,4 +140,48 @@ describe('routes talker', function() {
       expect(response.body).to.deep.equal(mockFile[1]);
     });
   });
+  describe('post /talker', function() {
+    it('returns error when not passing the token', async function() {
+
+    });
+    it('returns error when passing invalid token less than 16 characters', async function() {
+
+    });
+    it('returns error when passing token that is not a string', async function(){
+
+    });
+    it('returns error because name field is missing', async function() {
+
+    });
+    it('returns error because name field is less than 3 characters', async function() {
+      
+    });
+    it('returns error because age field is missing', async function() {
+      
+    });
+    it('returns error because the talker is under 18 years old', async function() {
+      
+    });
+    it('returns error because the watchedAt field is missing', async function() {
+      
+    });
+    it('returns error because the watchedAt field needs to be in mm/dd/yyy format', async function() {
+      
+    });
+    it('returns error because the watchedAt field needs to have a valid date', async function() {
+      
+    });
+    it('returns error because rate field is missing', async function() {
+      
+    });
+    it('returns error because the rate field must be an integer from 1 to 5', async function() {
+      
+    });
+    it('returns error because the talk field is missing', async function() {
+      
+    });
+    it('returns success when registering a new talker', async function() {
+      
+    });
+  });
 });
