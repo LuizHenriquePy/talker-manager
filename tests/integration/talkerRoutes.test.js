@@ -142,13 +142,33 @@ describe('routes talker', function () {
   });
   describe('post /talker', function () {
     it('returns error when not passing the token', async function () {
+      const response = await chai
+        .request(app)
+        .post('/talker');
 
+      expect(response.status).to.be.equal(401);
+      expect(response.body).to.haveOwnProperty('message');
+      expect(response.body.message).to.be.equal('Token não encontrado');
     });
     it('returns error when passing invalid token less than 16 characters', async function () {
+      const response = await chai
+        .request(app)
+        .post('/talker')
+        .set('Authorization', '12345');
 
+      expect(response.status).to.be.equal(401);
+      expect(response.body).to.haveOwnProperty('message');
+      expect(response.body.message).to.be.equal('Token inválido');
     });
     it('returns error when passing token that is not a string', async function () {
+      const response = await chai
+        .request(app)
+        .post('/talker')
+        .set('Authorization', ['adasdsdad']);
 
+      expect(response.status).to.be.equal(401);
+      expect(response.body).to.haveOwnProperty('message');
+      expect(response.body.message).to.be.equal('Token inválido');
     });
     it('returns error because name field is missing', async function () {
 
