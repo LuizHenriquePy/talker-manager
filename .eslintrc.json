@@ -4,9 +4,10 @@
         "commonjs": true,
         "es2021": true
     },
-    "extends": "airbnb-base",
-    "overrides": [
+    "plugins": [
+        "mocha"
     ],
+    "extends": ["airbnb-base", "plugin:mocha/recommended"],
     "parserOptions": {
         "ecmaVersion": "latest"
     },
@@ -15,5 +16,15 @@
         "no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
         "no-console": 0,
         "max-len": ["error", { "code": 110, "tabWidth": 2 }]
-    }
+    },
+    "overrides": [
+        {
+          "files": ["**/*.{test,spec}.js"],
+          "rules": {
+            "max-lines-per-function": "off",
+            "prefer-arrow-callback": "off",
+            "func-names": "off"
+          }
+        }
+    ]
 }
