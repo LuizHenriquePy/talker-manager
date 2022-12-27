@@ -242,13 +242,58 @@ describe('routes talker', function () {
       expect(response.body.message).to.be.equal('A pessoa palestrante deve ser maior de idade');
     });
     it('returns error because the watchedAt field is missing', async function () {
+      const response = await chai
+        .request(app)
+        .post('/talker')
+        .set('Authorization', '1234567890123456')
+        .send({
+          name: 'abc',
+          age: 18,
+          talk: {
+            rate: 3,
+          },
+        });
 
+      expect(response.status).to.be.equal(400);
+      expect(response.body).to.haveOwnProperty('message');
+      expect(response.body.message).to.be.equal('O campo "watchedAt" é obrigatório');
     });
     it('returns error because the watchedAt field needs to be in mm/dd/yyy format', async function () {
+      const response = await chai
+        .request(app)
+        .post('/talker')
+        .set('Authorization', '1234567890123456')
+        .send({
+          name: 'abc',
+          age: 18,
+          talk: {
+            watchedAt: '0/30/2000',
+            rate: 3,
+          },
+        });
 
+      expect(response.status).to.be.equal(400);
+      expect(response.body).to.haveOwnProperty('message');
+      expect(response.body.message).to.be.equal('O campo "watchedAt" deve ter o formato "dd/mm/aaaa"');
     });
     it('returns error because the watchedAt field needs to have a valid date', async function () {
+      const response = await chai
+        .request(app)
+        .post('/talker')
+        .set('Authorization', '1234567890123456')
+        .send({
+          name: 'abc',
+          age: 18,
+          talk: {
+            watchedAt: '30/30/2000',
+            rate: 3,
+          },
+        });
 
+      expect(response.status).to.be.equal(400);
+      expect(response.body).to.haveOwnProperty('message');
+      expect(response.body.message)
+        .to.be.equal('O campo "watchedAt" deve ter uma data válida no formato "dd/mm/aaaa"');
     });
     it('returns error because rate field is missing', async function () {
 
