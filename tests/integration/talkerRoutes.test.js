@@ -32,6 +32,7 @@ const mockFile = [
 describe('routes talker', function () {
   beforeEach(function () {
     sinon.stub(fs, 'readFile').resolves(JSON.stringify(mockFile));
+    sinon.stub(fs, 'writeFile').resolves();
   });
 
   afterEach(function () {
@@ -171,10 +172,39 @@ describe('routes talker', function () {
       expect(response.body.message).to.be.equal('Token inválido');
     });
     it('returns error because name field is missing', async function () {
+      const response = await chai
+        .request(app)
+        .post('/talker')
+        .set('Authorization', '1234567890123456')
+        .send({
+          age: 18,
+          talk: {
+            watchedAt: '01/01/2000',
+            rate: 3,
+          },
+        });
 
+      expect(response.status).to.be.equal(400);
+      expect(response.body).to.haveOwnProperty('message');
+      expect(response.body.message).to.be.equal('O campo "name" é obrigatório');
     });
     it('returns error because name field is less than 3 characters', async function () {
+      const response = await chai
+        .request(app)
+        .post('/talker')
+        .set('Authorization', '1234567890123456')
+        .send({
+          name: 'ab',
+          age: 18,
+          talk: {
+            watchedAt: '01/01/2000',
+            rate: 3,
+          },
+        });
 
+      expect(response.status).to.be.equal(400);
+      expect(response.body).to.haveOwnProperty('message');
+      expect(response.body.message).to.be.equal('O "name" deve ter pelo menos 3 caracteres');
     });
     it('returns error because age field is missing', async function () {
 
