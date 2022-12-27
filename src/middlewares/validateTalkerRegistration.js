@@ -30,7 +30,7 @@ const validateWatchedAt = (watchedAt) => {
   const year = watchedAt.slice(6, 10);
 
   if (!Date.parse(`${month}-${day}-${year}`)) {
-    return { message: 'O campo "watchedAt" deve ter o formato "dd/mm/aaaa"', status: 400 };
+    return { message: 'O campo "watchedAt" deve ter uma data válida no formato "dd/mm/aaaa"', status: 400 };
   }
 };
 
