@@ -331,7 +331,18 @@ describe('routes talker', function () {
       expect(response.body.message).to.be.equal('O campo "rate" deve ser um inteiro de 1 à 5');
     });
     it('returns error because the talk field is missing', async function () {
+      const response = await chai
+        .request(app)
+        .post('/talker')
+        .set('Authorization', '1234567890123456')
+        .send({
+          name: 'abc',
+          age: 18,
+        });
 
+      expect(response.status).to.be.equal(400);
+      expect(response.body).to.haveOwnProperty('message');
+      expect(response.body.message).to.be.equal('O campo "talk" é obrigatório');
     });
     it('returns success when registering a new talker', async function () {
 
