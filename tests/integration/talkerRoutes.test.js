@@ -207,10 +207,39 @@ describe('routes talker', function () {
       expect(response.body.message).to.be.equal('O "name" deve ter pelo menos 3 caracteres');
     });
     it('returns error because age field is missing', async function () {
+      const response = await chai
+        .request(app)
+        .post('/talker')
+        .set('Authorization', '1234567890123456')
+        .send({
+          name: 'abc',
+          talk: {
+            watchedAt: '01/01/2000',
+            rate: 3,
+          },
+        });
 
+      expect(response.status).to.be.equal(400);
+      expect(response.body).to.haveOwnProperty('message');
+      expect(response.body.message).to.be.equal('O campo "age" é obrigatório');
     });
     it('returns error because the talker is under 18 years old', async function () {
+      const response = await chai
+        .request(app)
+        .post('/talker')
+        .set('Authorization', '1234567890123456')
+        .send({
+          name: 'abc',
+          age: 17,
+          talk: {
+            watchedAt: '01/01/2000',
+            rate: 3,
+          },
+        });
 
+      expect(response.status).to.be.equal(400);
+      expect(response.body).to.haveOwnProperty('message');
+      expect(response.body.message).to.be.equal('A pessoa palestrante deve ser maior de idade');
     });
     it('returns error because the watchedAt field is missing', async function () {
 
