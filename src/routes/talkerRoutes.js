@@ -71,6 +71,8 @@ talkerRouter.put('/:id', validateToken, validateTalkerRegistration, async (req, 
     id = Number(id);
     const talkers = await read(filePath);
     if (!talkers) throw new Error(ERROR_MESSAGE_READ);
+    const isAnExistingId = talkers.some((talker) => talker.id === id);
+    if (!isAnExistingId) return res.status(404).json({ message: 'talker not found' });
     const newTalker = { ...req.body, id };
     const newTalkers = talkers.map((talker) => {
       if (talker.id === id) {
