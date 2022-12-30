@@ -345,7 +345,29 @@ describe('routes talker', function () {
       expect(response.body.message).to.be.equal('O campo "talk" é obrigatório');
     });
     it('returns success when registering a new talker', async function () {
+      const response = await chai
+        .request(app)
+        .post('/talker')
+        .set('Authorization', '1234567890123456')
+        .send({
+          name: 'abc',
+          age: 18,
+          talk: {
+            watchedAt: '12/12/2012',
+            rate: 5,
+          },
+        });
 
+      expect(response.status).to.be.equal(201);
+      expect(response.body).to.deep.equal({
+        name: 'abc',
+        age: 18,
+        id: 3,
+        talk: {
+          watchedAt: '12/12/2012',
+          rate: 5,
+        },
+      });
     });
   });
 });
