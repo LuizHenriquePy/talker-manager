@@ -370,4 +370,251 @@ describe('routes talker', function () {
       });
     });
   });
+  describe('put /talker/:id', function () {
+    it('returns error when not passing the token', async function () {
+      const response = await chai
+        .request(app)
+        .put('/talker/1');
+
+      expect(response.status).to.be.equal(401);
+      expect(response.body).to.haveOwnProperty('message');
+      expect(response.body.message).to.be.equal('Token não encontrado');
+    });
+    it('returns error when passing invalid token less than 16 characters', async function () {
+      const response = await chai
+        .request(app)
+        .put('/talker/1')
+        .set('Authorization', '12345');
+
+      expect(response.status).to.be.equal(401);
+      expect(response.body).to.haveOwnProperty('message');
+      expect(response.body.message).to.be.equal('Token inválido');
+    });
+    it('returns error when passing token that is not a string', async function () {
+      const response = await chai
+        .request(app)
+        .put('/talker/1')
+        .set('Authorization', ['adasdsdad']);
+
+      expect(response.status).to.be.equal(401);
+      expect(response.body).to.haveOwnProperty('message');
+      expect(response.body.message).to.be.equal('Token inválido');
+    });
+    it('returns error because name field is missing', async function () {
+      const response = await chai
+        .request(app)
+        .put('/talker/1')
+        .set('Authorization', '1234567890123456')
+        .send({
+          age: 18,
+          talk: {
+            watchedAt: '01/01/2000',
+            rate: 3,
+          },
+        });
+
+      expect(response.status).to.be.equal(400);
+      expect(response.body).to.haveOwnProperty('message');
+      expect(response.body.message).to.be.equal('O campo "name" é obrigatório');
+    });
+    it('returns error because name field is less than 3 characters', async function () {
+      const response = await chai
+        .request(app)
+        .put('/talker/1')
+        .set('Authorization', '1234567890123456')
+        .send({
+          name: 'ab',
+          age: 18,
+          talk: {
+            watchedAt: '01/01/2000',
+            rate: 3,
+          },
+        });
+
+      expect(response.status).to.be.equal(400);
+      expect(response.body).to.haveOwnProperty('message');
+      expect(response.body.message).to.be.equal('O "name" deve ter pelo menos 3 caracteres');
+    });
+    it('returns error because age field is missing', async function () {
+      const response = await chai
+        .request(app)
+        .put('/talker/1')
+        .set('Authorization', '1234567890123456')
+        .send({
+          name: 'abc',
+          talk: {
+            watchedAt: '01/01/2000',
+            rate: 3,
+          },
+        });
+
+      expect(response.status).to.be.equal(400);
+      expect(response.body).to.haveOwnProperty('message');
+      expect(response.body.message).to.be.equal('O campo "age" é obrigatório');
+    });
+    it('returns error because the talker is under 18 years old', async function () {
+      const response = await chai
+        .request(app)
+        .put('/talker/1')
+        .set('Authorization', '1234567890123456')
+        .send({
+          name: 'abc',
+          age: 17,
+          talk: {
+            watchedAt: '01/01/2000',
+            rate: 3,
+          },
+        });
+
+      expect(response.status).to.be.equal(400);
+      expect(response.body).to.haveOwnProperty('message');
+      expect(response.body.message).to.be.equal('A pessoa palestrante deve ser maior de idade');
+    });
+    it('returns error because the watchedAt field is missing', async function () {
+      const response = await chai
+        .request(app)
+        .put('/talker/1')
+        .set('Authorization', '1234567890123456')
+        .send({
+          name: 'abc',
+          age: 18,
+          talk: {
+            rate: 3,
+          },
+        });
+
+      expect(response.status).to.be.equal(400);
+      expect(response.body).to.haveOwnProperty('message');
+      expect(response.body.message).to.be.equal('O campo "watchedAt" é obrigatório');
+    });
+    it('returns error because the watchedAt field needs to be in mm/dd/yyy format', async function () {
+      const response = await chai
+        .request(app)
+        .put('/talker/1')
+        .set('Authorization', '1234567890123456')
+        .send({
+          name: 'abc',
+          age: 18,
+          talk: {
+            watchedAt: '0/30/2000',
+            rate: 3,
+          },
+        });
+
+      expect(response.status).to.be.equal(400);
+      expect(response.body).to.haveOwnProperty('message');
+      expect(response.body.message).to.be.equal('O campo "watchedAt" deve ter o formato "dd/mm/aaaa"');
+    });
+    it('returns error because the watchedAt field needs to have a valid date', async function () {
+      const response = await chai
+        .request(app)
+        .put('/talker/1')
+        .set('Authorization', '1234567890123456')
+        .send({
+          name: 'abc',
+          age: 18,
+          talk: {
+            watchedAt: '30/30/2000',
+            rate: 3,
+          },
+        });
+
+      expect(response.status).to.be.equal(400);
+      expect(response.body).to.haveOwnProperty('message');
+      expect(response.body.message)
+        .to.be.equal('O campo "watchedAt" deve ter uma data válida no formato "dd/mm/aaaa"');
+    });
+    it('returns error because rate field is missing', async function () {
+      const response = await chai
+        .request(app)
+        .put('/talker/1')
+        .set('Authorization', '1234567890123456')
+        .send({
+          name: 'abc',
+          age: 18,
+          talk: {
+            watchedAt: '12/12/2012',
+          },
+        });
+
+      expect(response.status).to.be.equal(400);
+      expect(response.body).to.haveOwnProperty('message');
+      expect(response.body.message).to.be.equal('O campo "rate" é obrigatório');
+    });
+    it('returns error because the rate field must be an integer from 1 to 5', async function () {
+      const response = await chai
+        .request(app)
+        .put('/talker/1')
+        .set('Authorization', '1234567890123456')
+        .send({
+          name: 'abc',
+          age: 18,
+          talk: {
+            watchedAt: '12/12/2012',
+            rate: 7,
+          },
+        });
+
+      expect(response.status).to.be.equal(400);
+      expect(response.body).to.haveOwnProperty('message');
+      expect(response.body.message).to.be.equal('O campo "rate" deve ser um inteiro de 1 à 5');
+    });
+    it('returns error because the talk field is missing', async function () {
+      const response = await chai
+        .request(app)
+        .put('/talker/1')
+        .set('Authorization', '1234567890123456')
+        .send({
+          name: 'abc',
+          age: 18,
+        });
+
+      expect(response.status).to.be.equal(400);
+      expect(response.body).to.haveOwnProperty('message');
+      expect(response.body.message).to.be.equal('O campo "talk" é obrigatório');
+    });
+    it('returns talker not found when sending non-existing id ', async function () {
+      const response = await chai
+        .request(app)
+        .put('/talker/10')
+        .set('Authorization', '1234567890123456')
+        .send({
+          name: 'abc',
+          age: 18,
+          talk: {
+            watchedAt: '12/12/2012',
+            rate: 5,
+          },
+        });
+
+      expect(response.status).to.be.equal(404);
+      expect(response.body).to.haveOwnProperty('message');
+      expect(response.body.message).to.be.equal('talker not found');
+    });
+    it('returns success when registering a new talker', async function () {
+      const response = await chai
+        .request(app)
+        .put('/talker/1')
+        .set('Authorization', '1234567890123456')
+        .send({
+          name: 'abc',
+          age: 18,
+          talk: {
+            watchedAt: '12/12/2012',
+            rate: 5,
+          },
+        });
+
+      expect(response.status).to.be.equal(200);
+      expect(response.body).to.deep.equal({
+        name: 'abc',
+        age: 18,
+        id: 1,
+        talk: {
+          watchedAt: '12/12/2012',
+          rate: 5,
+        },
+      });
+    });
+  });
 });
