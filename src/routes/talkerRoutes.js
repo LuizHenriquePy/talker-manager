@@ -90,10 +90,13 @@ talkerRouter.put('/:id', validateToken, validateTalkerRegistration, async (req, 
 
 talkerRouter.delete('/:id', validateToken, async (req, res, next) => {
   try {
-    const { id } = req.params;
+    let { id } = req.params;
+    id = Number(id);
     const talkers = await read(filePath);
     if (!talkers) throw new Error(ERROR_MESSAGE_READ);
-    const newTalkers = talkers.filter((talker) => talker.id !== Number(id));
+    const isAnExistingId = talkers.some((talker) => talker.id === id);
+    if (!isAnExistingId) return res.status(404).json({ message: 'talker not found' });
+    const newTalkers = talkers.filter((talker) => talker.id !== id);
     const result = await write(newTalkers, filePath);
     if (!result) throw new Error('Erro na escrita do banco de dados');
     return res.status(204).send();
