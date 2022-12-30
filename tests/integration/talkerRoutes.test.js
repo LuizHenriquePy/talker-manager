@@ -617,4 +617,53 @@ describe('routes talker', function () {
       });
     });
   });
+  describe('delete /talker/:id', function () {
+    it('returns error when not passing the token', async function () {
+      const response = await chai
+        .request(app)
+        .delete('/talker/1');
+
+      expect(response.status).to.be.equal(401);
+      expect(response.body).to.haveOwnProperty('message');
+      expect(response.body.message).to.be.equal('Token não encontrado');
+    });
+    it('returns error when passing invalid token less than 16 characters', async function () {
+      const response = await chai
+        .request(app)
+        .delete('/talker/1')
+        .set('Authorization', '12345');
+
+      expect(response.status).to.be.equal(401);
+      expect(response.body).to.haveOwnProperty('message');
+      expect(response.body.message).to.be.equal('Token inválido');
+    });
+    it('returns error when passing token that is not a string', async function () {
+      const response = await chai
+        .request(app)
+        .delete('/talker/1')
+        .set('Authorization', ['adasdsdad']);
+
+      expect(response.status).to.be.equal(401);
+      expect(response.body).to.haveOwnProperty('message');
+      expect(response.body.message).to.be.equal('Token inválido');
+    });
+    it('returns talker not found when sending non-existing id ', async function () {
+      const response = await chai
+        .request(app)
+        .delete('/talker/10')
+        .set('Authorization', '1234567890123456');
+
+      expect(response.status).to.be.equal(404);
+      expect(response.body).to.haveOwnProperty('message');
+      expect(response.body.message).to.be.equal('talker not found');
+    });
+    it('returns success when deleting a talker', async function () {
+      const response = await chai
+        .request(app)
+        .delete('/talker/1')
+        .set('Authorization', '1234567890123456');
+
+      expect(response.status).to.be.equal(204);
+    });
+  });
 });
