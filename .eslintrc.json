@@ -23,7 +23,8 @@
           "rules": {
             "max-lines-per-function": "off",
             "prefer-arrow-callback": "off",
-            "func-names": "off"
+            "func-names": "off",
+            "no-unused-expressions": "off"
           }
         }
     ]
