@@ -1,14 +1,59 @@
-# :construction: README em construção ! :construction:
-<!-- Olá, Tryber!
-Esse é apenas um arquivo inicial para o README do seu projeto.
-É essencial que você preencha esse documento por conta própria, ok?
-Não deixe de usar nossas dicas de escrita de README de projetos, e deixe sua criatividade brilhar!
-:warning: IMPORTANTE: você precisa deixar nítido:
-- quais arquivos/pastas foram desenvolvidos por você; 
-- quais arquivos/pastas foram desenvolvidos por outra pessoa estudante;
-- quais arquivos/pastas foram desenvolvidos pela Trybe.
--->
-Desenvolvidos pela Trybe:
+# Talker Manager
+O projeto consiste em uma API para gerenciar o cadastro, edição, visualização e exclusão de dados de um palestrante (talker).
+
+## Tecnologias usadas
+- JavaScript
+- Expressjs
+- Node
+- Nodemon
+- Mocha
+- Chai
+- Chai-http
+- Sinon
+- Docker
+- Eslint
+
+## Como executar o projeto
+Faça o clone do repositório:
+```sh
+git clone https://github.com/LuizHenriquePy/talker-manager.git
+```
+Faça a instalação das bibliotecas necessárias:
+```sh
+npm install
+```
+Execute o docker compose:
+```sh
+docker-compose up -d
+```
+Acesse o terminal do container:
+```sh
+docker exec -it talker_manager bash
+```
+Faça a instalação das bibliotecas (caso seja necessário):
+```sh
+npm install
+```
+Execute o projeto:
+```sh
+npm run dev
+```
+
+## Como executar os testes
+Execute o docker compose:
+```sh
+docker-compose up -d
+```
+Acesse o terminal do container:
+```sh
+docker exec -it talker-manager bash
+```
+Execute os testes:
+```sh
+npm test
+```
+
+## Arquivos desenvolvidos pela Trybe:
 - docker-compose.yml
 - talker.json
 - seed.json
