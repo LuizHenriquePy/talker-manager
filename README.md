@@ -4,6 +4,7 @@ O projeto consiste em uma API para gerenciar o cadastro, edição, visualizaçã
 ## Tecnologias usadas
 - JavaScript
 - Expressjs
+- fs
 - Node
 - Nodemon
 - Mocha
