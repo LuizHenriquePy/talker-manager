@@ -1,5 +1,4 @@
 const chai = require('chai');
-const { afterEach } = require('mocha');
 const sinon = require('sinon');
 
 const { expect } = chai;
