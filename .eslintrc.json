@@ -1,9 +1,32 @@
 {
-  "env": {
-    "es2020": true
-  },
-  "extends": "trybe-backend",
-  "rules": {
-    "sonarjs/no-duplicate-string": ["error", 5]
-  }
+    "env": {
+        "browser": true,
+        "commonjs": true,
+        "es2021": true
+    },
+    "plugins": [
+        "mocha"
+    ],
+    "extends": ["airbnb-base", "plugin:mocha/recommended"],
+    "parserOptions": {
+        "ecmaVersion": "latest"
+    },
+    "rules": {
+        "consistent-return": 0,
+        "no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
+        "no-console": 0,
+        "max-len": ["error", { "code": 110, "tabWidth": 2 }]
+    },
+    "overrides": [
+        {
+          "files": ["**/*.{test,spec}.js"],
+          "rules": {
+            "max-lines-per-function": "off",
+            "prefer-arrow-callback": "off",
+            "func-names": "off",
+            "no-unused-expressions": "off",
+            "max-len": ["error", { "code": 140, "tabWidth": 2 }]
+          }
+        }
+    ]
 }

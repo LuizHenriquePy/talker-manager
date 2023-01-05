@@ -1,11 +1,11 @@
 const path = require('path');
-const { read } = require('./functionsFS');
+const functionsFS = require('./functionsFS');
 
 const filePath = path.resolve('src', 'talker.json');
 
 const idGenerator = async () => {
   try {
-    const talkers = await read(filePath);
+    const talkers = await functionsFS.read(filePath);
     const arrayIds = talkers.map((e) => e.id);
     return Math.max(...arrayIds) + 1;
   } catch (error) {
