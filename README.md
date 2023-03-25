@@ -1,7 +1,7 @@
 # Talker Manager
 O projeto consiste em uma API para gerenciar o cadastro, edição, visualização e exclusão de dados de um palestrante (talker).
 
-## Tecnologias usadas
+## Tecnologias utilizadas
 - JavaScript
 - Expressjs
 - fs
